@@ -1,0 +1,10 @@
+apply plugin: 'org.jetbrains.dokka'
+
+dokka {
+    outputFormat = 'javadoc'
+}
+
+task dokkaDocsJar(type: Jar, dependsOn: dokka) {
+    from dokka.outputDirectory
+}
+

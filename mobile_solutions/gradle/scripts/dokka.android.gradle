@@ -1,0 +1,9 @@
+apply plugin: 'org.jetbrains.dokka-android'
+
+dokka {
+    outputFormat = 'javadoc'
+}
+
+task dokkaDocsJar(type: Jar, dependsOn: dokka) {
+    from dokka.outputDirectory
+}

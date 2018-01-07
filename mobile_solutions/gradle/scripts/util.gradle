@@ -1,0 +1,35 @@
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+ext {
+    getCommitCount = {
+        def commitCount = 'git rev-list HEAD --count --first-parent'.execute().text.trim()
+        return commitCount ? Integer.parseInt(commitCount) : 0
+    }
+
+    getCommitMessage = {
+        def message = 'git log --oneline -n 4 --no-merges'.execute().text;
+        return message
+    }
+
+    getCurrentBranch = {
+        def branchName = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
+        return branchName
+    }
+
+    getShortBranchName = { branchToBuild ->
+        def branchName = branchToBuild ? branchToBuild : getCurrentBranch()
+        return branchName.split("/")[-1]
+    }
+
+    getVersionName = { branchToBuild ->
+        return getShortBranchName(branchToBuild) + "." + getCommitCount()
+    }
+
+
+    buildVersionFromTime = {
+        DateFormat dateFormat = new SimpleDateFormat('yyMMddHHmm');
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
+        return dateFormat.format(System.currentTimeMillis()) as int
+    }
+}

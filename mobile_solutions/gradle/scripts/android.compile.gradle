@@ -1,0 +1,26 @@
+android {
+    compileSdkVersion VERSION_SDK_COMPILE
+    buildToolsVersion VERSION_BUILD_TOOLS
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion VERSION_SDK_MIN
+        targetSdkVersion VERSION_SDK_TARGET
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled = true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}

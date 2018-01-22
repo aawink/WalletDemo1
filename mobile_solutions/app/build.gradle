@@ -1,13 +1,18 @@
 apply plugin: 'com.android.application'
 
+ext {
+    PROJECT_VERSION_CODE = 1
+    PROJECT_VERSION_NAME = "1.0"
+}
+
+apply from: "$rootDir/gradle/scripts/android.compile.gradle"
+apply from: "$rootDir/gradle/scripts/kotlin.android.gradle"
+
 android {
-    compileSdkVersion 26
     defaultConfig {
         applicationId "com.shiplytics.mobile.driver"
-        minSdkVersion 19
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode PROJECT_VERSION_CODE
+        versionName PROJECT_VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -22,7 +27,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$VERSION_KOTLIN"
+
+    kapt "com.google.dagger:dagger-compiler:$VERSION_DAGGER"
+    kapt "com.google.dagger:dagger-android-processor:$VERSION_DAGGER"
+
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    testImplementation "org.mockito:mockito-core:$VERSION_MOCKITO"
 }

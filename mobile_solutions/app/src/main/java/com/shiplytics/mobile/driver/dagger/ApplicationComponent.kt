@@ -1,6 +1,11 @@
 package com.shiplytics.mobile.driver.dagger
 
-@Singlton
-@Component(modules={ApplicationModule.class})
+import com.shiplytics.mobile.driver.DriverApplication
+import dagger.Component
+import javax.inject.Singleton
+
+@Singleton
+@Component(modules= arrayOf(AppModule::class))
 interface ApplicationComponent {
+    fun inject(app:DriverApplication)
 }

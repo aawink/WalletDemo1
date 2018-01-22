@@ -4,7 +4,7 @@ ext {
     VERSION_SDK_COMPILE = 26
     VERSION_SDK_TARGET = 26
     VERSION_BUILD_TOOLS = '26.0.2'
-    VERSION_ANDROID_SUPPORT = '26.1.0'
+    VERSION_ANDROID_SUPPORT = '27.0.2'
     VERSION_RXJAVA2 = "2.1.4"
     VERSION_RXJAVA_RXANDROID = "2.0.1"
     VERSION_JACOCO = "0.7.9"
@@ -24,12 +24,13 @@ ext {
     VERSION_DAGGER = '2.11'
     VERSION_MOCKITO = "2.8.9" // Higher versions will be incompatible with PowerMock 1.x
     VERSION_MOCKITO_KOTLIN = "1.5.0"
+    VERSION_FIREBASE = "11.8.0"
 }
 
 buildscript {
     ext {
         VERSION_GOOGLE_SERVICES = "3.1.1"
-        VERSION_KOTLIN = "1.2.0"
+        VERSION_KOTLIN = "1.2.20"
         VERSION_DOKKA = "0.9.15"
     }
     

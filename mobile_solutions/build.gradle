@@ -16,11 +16,14 @@ ext {
     VERSION_MOCKITO = "2.11.0"
     VERSION_ROBOELECTRIC = "3.0"
     VERSION_SWAGGER_ANNOTATIONS = "1.5.8"
+    VERSION_SLF4J_API = "1.7.25"
     VERSION_ESPRESSO = "2.2.2"
     VERSION_GUAVA = "23.0"
     VERSION_GUAVA_ANDROID = "$VERSION_GUAVA-android"
     VERSION_GREENROBOT_EVENTBUS = "3.0.0"
     VERSION_DAGGER = '2.11'
+    VERSION_MOCKITO = "2.8.9" // Higher versions will be incompatible with PowerMock 1.x
+    VERSION_MOCKITO_KOTLIN = "1.5.0"
 }
 
 buildscript {

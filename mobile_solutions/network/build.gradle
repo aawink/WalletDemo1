@@ -20,6 +20,7 @@ dependencies {
     }
     implementation "com.squareup.okhttp3:okhttp:$VERSION_OKHTTP"
     implementation "com.squareup.okhttp3:logging-interceptor:$VERSION_OKHTTP"
+    implementation "com.google.dagger:dagger:$VERSION_DAGGER"
 
     kapt "com.google.dagger:dagger-compiler:$VERSION_DAGGER"
     kapt "com.google.guava:guava:$VERSION_GUAVA"

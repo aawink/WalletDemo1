@@ -34,10 +34,6 @@ class LoginActivity : AppCompatActivity() {
     @Inject
     lateinit var loginPresenter: LoginPresenter
 
-    // UI references.
-    private var mEmailView: AutoCompleteTextView? = null
-    private var mProgressView: View? = null
-    private var mLoginFormView: View? = null
     private lateinit var loginViewModel: LoginViewModel
     private val loginLiveDataObserver = createLoginLiveDateObserver()
 
@@ -48,6 +44,17 @@ class LoginActivity : AppCompatActivity() {
                 showProgress(loginStateModel.isLoggingIn)
                 if (loginStateModel.isLoggedIn) {
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                } else if (loginStateModel.loginError.isNotEmpty()) {
+                    Toast.makeText(this, loginStateModel.loginError, Toast.LENGTH_SHORT).show()
+                } else if (loginStateModel.userNameError.isNotEmpty()) {
+                    email.error = loginStateModel.userNameError
+                    email.requestFocus()
+                } else if (loginStateModel.passwordError.isNotEmpty()) {
+                    etPassword.error = loginStateModel.passwordError
+                    etPassword.requestFocus()
+                } else if (loginStateModel.passwordMismatch.isNotEmpty()) {
+                    etPasswordConfirm.error = "Passwords Must Match"
+                    etPasswordConfirm.requestFocus()
                 }
             }
         }
@@ -59,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         setContentView(R.layout.activity_login)
         // Set up the login form.
-        mEmailView = findViewById(R.id.email)
 
         etPassword!!.setOnEditorActionListener(TextView.OnEditorActionListener { textView, id, keyEvent ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -81,9 +87,6 @@ class LoginActivity : AppCompatActivity() {
 
         val mEmailSignInButton = findViewById<Button>(R.id.email_sign_in_button)
         mEmailSignInButton.setOnClickListener { attemptLogin() }
-
-        mLoginFormView = findViewById(R.id.login_form)
-        mProgressView = findViewById(R.id.login_progress)
 
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
     }
@@ -109,77 +112,35 @@ class LoginActivity : AppCompatActivity() {
         loginPresenter.loginOrRegister(email.text.toString(), etPassword.text.toString(), etPasswordConfirm.text.toString(), chkRegister.isChecked)
     }
 
-    private fun oldAttemptLogin() {
-
-        // Reset errors.
-        mEmailView!!.error = null
-        etPassword!!.error = null
-
-        // Store values at the time of the login attempt.
-        val email = mEmailView!!.text.toString()
-        val password = etPassword!!.text.toString()
-
-        var cancel = false
-        var focusView: View? = null
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            etPassword!!.error = getString(R.string.error_invalid_password)
-            focusView = etPassword
-            cancel = true
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView!!.error = getString(R.string.error_field_required)
-            focusView = mEmailView
-            cancel = true
-        } else if (!isEmailValid(email)) {
-            mEmailView!!.error = getString(R.string.error_invalid_email)
-            focusView = mEmailView
-            cancel = true
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView!!.requestFocus()
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true)
-        }
-    }
-
-    private fun isEmailValid(email: String): Boolean {
-        return email.contains("@")
-    }
-
-    private fun isPasswordValid(password: String): Boolean {
-        return password.length >= resources.getInteger(R.integer.minPasswordLength)
-    }
-
     /**
      * Shows the progress UI and hides the login form.
      */
     private fun showProgress(show: Boolean) {
         val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        mLoginFormView!!.visibility = if (show) View.GONE else View.VISIBLE
-        mLoginFormView!!.animate().setDuration(shortAnimTime.toLong()).alpha(
+        login_form.visibility = if (show) View.GONE else View.VISIBLE
+        login_form.animate().setDuration(shortAnimTime.toLong()).alpha(
                 (if (show) 0 else 1).toFloat()).setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                mLoginFormView!!.visibility = if (show) View.GONE else View.VISIBLE
+                login_form.visibility = if (show) View.GONE else View.VISIBLE
             }
         })
 
-        mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-        mProgressView!!.animate().setDuration(shortAnimTime.toLong()).alpha(
+        login_progress.visibility = if (show) View.VISIBLE else View.GONE
+        login_progress.animate().setDuration(shortAnimTime.toLong()).alpha(
                 (if (show) 1 else 0).toFloat()).setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
+                login_progress.visibility = if (show) View.VISIBLE else View.GONE
             }
         })
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (chkRegister.isChecked) {
+            email_sign_in_button.setText(R.string.action_register)
+            etPasswordConfirm.visibility = View.VISIBLE
+        }
     }
 
     override fun onStart() {
@@ -187,14 +148,6 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.loginLiveData.observe(this, loginLiveDataObserver)
         loginPresenter.bindViewModel(loginViewModel)
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 
 

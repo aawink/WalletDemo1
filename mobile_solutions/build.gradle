@@ -1,0 +1,67 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext {
+    VERSION_SDK_MIN = 19
+    VERSION_SDK_COMPILE = 26
+    VERSION_SDK_TARGET = 26
+    VERSION_BUILD_TOOLS = '26.0.2'
+    VERSION_ANDROID_SUPPORT = '27.0.2'
+    VERSION_RXJAVA2 = "2.1.4"
+    VERSION_RXJAVA_RXANDROID = "2.0.1"
+    VERSION_JACOCO = "0.7.9"
+    VERSION_GSON = "2.8.2"
+    VERSION_SIMPLE_XML = "2.7.1"
+    VERSION_RETROFIT = "2.3.0"
+    VERSION_OKHTTP = "3.9.0"
+    VERSION_JUNIT = "4.12"
+    VERSION_MOCKITO = "2.11.0"
+    VERSION_ROBOELECTRIC = "3.0"
+    VERSION_SWAGGER_ANNOTATIONS = "1.5.8"
+    VERSION_SLF4J_API = "1.7.25"
+    VERSION_ESPRESSO = "2.2.2"
+    VERSION_GUAVA = "23.0"
+    VERSION_GUAVA_ANDROID = "$VERSION_GUAVA-android"
+    VERSION_GREENROBOT_EVENTBUS = "3.0.0"
+    VERSION_DAGGER = '2.11'
+    VERSION_MOCKITO = "2.8.9" // Higher versions will be incompatible with PowerMock 1.x
+    VERSION_MOCKITO_KOTLIN = "1.5.0"
+    VERSION_FIREBASE = "11.8.0"
+    VERSION_ARCHLIFECYCLE = "1.1.0"
+}
+
+buildscript {
+    ext {
+        VERSION_GOOGLE_SERVICES = "3.1.1"
+        VERSION_KOTLIN = "1.2.21"
+        VERSION_DOKKA = "0.9.15"
+    }
+    
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url "https://maven.google.com" // Google's Maven repository
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath "com.google.gms:google-services:$VERSION_GOOGLE_SERVICES" // google-services plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$VERSION_KOTLIN"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$VERSION_DOKKA"
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$VERSION_DOKKA"
+        
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

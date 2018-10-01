@@ -1,0 +1,29 @@
+apply plugin: 'java-library'
+apply from: "$rootDir/gradle/scripts/kotlin.gradle"
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api "com.android.support:support-annotations:$VERSION_ANDROID_SUPPORT"
+    api "com.squareup.retrofit2:retrofit:$VERSION_RETROFIT"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$VERSION_KOTLIN"
+    implementation "com.android.support:appcompat-v7:$VERSION_ANDROID_SUPPORT"
+    implementation group: 'com.google.guava', name: 'guava', version: "$VERSION_GUAVA_ANDROID"
+    implementation "com.google.code.gson:gson:$VERSION_GSON"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
+    implementation "com.squareup.retrofit2:converter-gson:$VERSION_RETROFIT"
+    implementation("com.squareup.retrofit2:converter-simplexml:$VERSION_RETROFIT") {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
+    implementation "com.squareup.okhttp3:okhttp:$VERSION_OKHTTP"
+    implementation "com.squareup.okhttp3:logging-interceptor:$VERSION_OKHTTP"
+    implementation "com.google.dagger:dagger:$VERSION_DAGGER"
+
+    kapt "com.google.dagger:dagger-compiler:$VERSION_DAGGER"
+    kapt "com.google.guava:guava:$VERSION_GUAVA"
+
+    testImplementation "junit:junit:$VERSION_JUNIT"
+}

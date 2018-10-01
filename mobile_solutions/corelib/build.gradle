@@ -1,0 +1,30 @@
+apply plugin: 'java-library'
+
+
+apply from: "$rootDir/gradle/scripts/kotlin.gradle"
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api "com.android.support:support-annotations:$VERSION_ANDROID_SUPPORT"
+    api 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    api "com.google.dagger:dagger:$VERSION_DAGGER"
+    api "com.google.code.gson:gson:$VERSION_GSON"
+    api "io.reactivex.rxjava2:rxjava:$VERSION_RXJAVA2"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$VERSION_KOTLIN"
+    implementation "com.google.guava:guava:$VERSION_GUAVA_ANDROID"
+    implementation "org.slf4j:slf4j-api:$VERSION_SLF4J_API"
+
+    kapt "com.google.dagger:dagger-compiler:$VERSION_DAGGER"
+    kapt "com.google.guava:guava:$VERSION_GUAVA"
+
+    testImplementation "junit:junit:$VERSION_JUNIT"
+    testImplementation "com.google.guava:guava-testlib:$VERSION_GUAVA_ANDROID"
+    testImplementation "org.mockito:mockito-core:$VERSION_MOCKITO"
+    testImplementation "com.nhaarman:mockito-kotlin:$VERSION_MOCKITO_KOTLIN"
+}

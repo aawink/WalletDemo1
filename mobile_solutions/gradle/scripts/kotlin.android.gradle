@@ -1,0 +1,3 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: "$rootDir/gradle/scripts/dokka.android.gradle"

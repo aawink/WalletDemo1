@@ -1,0 +1,29 @@
+<html>
+<head>
+    <script type="text/javascript">
+        function setup() {
+            document.getElementById("log").value += "Running setup\n";
+
+            document.getElementById("log").value += __SuperApp__ + "\n";
+
+            if (__SuperApp__) {
+                document.getElementById("log").value += "__SuperApp__ found \n";
+
+                __SuperApp__.addActionItem("Next Page", "https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/next-icon.svg", "nextPageActionReceived");
+                document.getElementById("log").value += "addActionItem should be invoked \n";
+
+            }
+        }
+
+        function nextPageActionReceived(o) {
+            console.log("nextPageClicked");
+            document.getElementById("rootHTag").textContent = "nextPage clicked";
+        }
+    </script>
+</head>
+<body onload="setup()">
+<h1 id="rootHTag">Hello World!</h1>
+<input type="button" value="Next Page" onclick="nextPageActionReceived()"/>
+<textarea id="log"></textarea>
+</body>
+</html>
